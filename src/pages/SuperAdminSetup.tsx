@@ -5,6 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { createUser, getRoleByName, setAppState, generateId, logAudit } from '@/lib/db';
 import { useAuth } from '@/contexts/AuthContext';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { UserCog, ShieldAlert } from 'lucide-react';
 
 export default function SuperAdminSetup() {
