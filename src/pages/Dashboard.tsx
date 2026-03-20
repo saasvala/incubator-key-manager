@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { LogOut, Users, Rocket, Target, Calendar, DollarSign, Package, BarChart3, FileText, Shield, Database } from 'lucide-react';
+import UserManagement from './UserManagement';
 
 const MODULE_ICONS: Record<string, React.ReactNode> = {
   dashboard: <BarChart3 className="h-5 w-5" />,
@@ -35,6 +37,12 @@ const MODULE_LABELS: Record<string, string> = {
 
 export default function Dashboard() {
   const { currentUser, currentRole, permissions, logout } = useAuth();
+  const [activeModule, setActiveModule] = useState<string | null>(null);
+
+  // Route to module components
+  if (activeModule === 'users') {
+    return <UserManagement onBack={() => setActiveModule(null)} />;
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -61,7 +69,11 @@ export default function Dashboard() {
           {permissions
             .filter(p => p !== 'dashboard')
             .map((mod) => (
-              <Card key={mod} className="cursor-pointer border-border/50 transition-colors hover:border-primary/30 hover:bg-accent/50">
+              <Card
+                key={mod}
+                className="cursor-pointer border-border/50 transition-all hover:border-primary/30 hover:bg-accent/50 active:scale-[0.98]"
+                onClick={() => setActiveModule(mod)}
+              >
                 <CardHeader className="pb-2">
                   <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
