@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { validateLicenseKey, storeLicense, seedRoles, setAppState } from '@/lib/db';
 import { useAuth } from '@/contexts/AuthContext';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { KeyRound, ShieldAlert } from 'lucide-react';
 
 export default function LicenseKeyScreen() {
