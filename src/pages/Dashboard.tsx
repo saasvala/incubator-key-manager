@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { LogOut, Users, Rocket, Target, Calendar, DollarSign, Package, BarChart3, FileText, Shield, Database } from 'lucide-react';
 import UserManagement from './UserManagement';
 
@@ -35,30 +36,46 @@ const MODULE_LABELS: Record<string, string> = {
   users: 'User Management',
 };
 
+const MODULE_DESCRIPTIONS: Record<string, string> = {
+  startups: 'Register and manage startup profiles',
+  cohorts: 'Organize startups into program cohorts',
+  mentorship: 'Schedule and track mentor sessions',
+  milestones: 'Set goals and track progress',
+  resources: 'Allocate equipment, space & tools',
+  funding: 'Track grants, investments & loans',
+  evaluation: 'Score and compare startup performance',
+  reports: 'Generate reports and export data',
+  audit: 'View system activity logs',
+  backup: 'Backup and restore all data',
+  users: 'Manage users, roles & permissions',
+};
+
 export default function Dashboard() {
   const { currentUser, currentRole, permissions, logout } = useAuth();
   const [activeModule, setActiveModule] = useState<string | null>(null);
 
-  // Route to module components
   if (activeModule === 'users') {
     return <UserManagement onBack={() => setActiveModule(null)} />;
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pb-12">
       {/* Header */}
-      <header className="border-b border-border bg-card">
+      <header className="border-b border-border bg-card shadow-sm">
         <div className="container mx-auto flex items-center justify-between px-4 py-3">
           <div>
-            <h1 className="text-lg font-bold text-foreground">Incubator Management</h1>
+            <h1 className="text-lg font-bold tracking-tight text-foreground">Incubator Management</h1>
             <p className="text-xs text-muted-foreground">
               {currentUser?.username} — {currentRole?.name}
             </p>
           </div>
-          <Button variant="outline" size="sm" onClick={logout}>
-            <LogOut className="mr-2 h-4 w-4" />
-            Logout
-          </Button>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Button variant="outline" size="sm" onClick={logout}>
+              <LogOut className="mr-2 h-4 w-4" />
+              Logout
+            </Button>
+          </div>
         </div>
       </header>
 
@@ -71,12 +88,12 @@ export default function Dashboard() {
             .map((mod) => (
               <Card
                 key={mod}
-                className="cursor-pointer border-border/50 transition-all hover:border-primary/30 hover:bg-accent/50 active:scale-[0.98]"
+                className="group cursor-pointer border-border/60 transition-all duration-200 hover:border-primary/40 hover:shadow-md active:scale-[0.97]"
                 onClick={() => setActiveModule(mod)}
               >
                 <CardHeader className="pb-2">
                   <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary/20">
                       {MODULE_ICONS[mod]}
                     </div>
                     <CardTitle className="text-sm font-medium">
@@ -86,7 +103,7 @@ export default function Dashboard() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-xs text-muted-foreground">
-                    Click to open module
+                    {MODULE_DESCRIPTIONS[mod] || 'Click to open module'}
                   </p>
                 </CardContent>
               </Card>

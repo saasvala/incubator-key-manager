@@ -5,6 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { createUser, getRoleByName, setAppState, generateId, logAudit } from '@/lib/db';
 import { useAuth } from '@/contexts/AuthContext';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { UserCog, ShieldAlert } from 'lucide-react';
 
 export default function SuperAdminSetup() {
@@ -61,7 +62,8 @@ export default function SuperAdminSetup() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background p-4">
+    <div className="relative flex min-h-screen items-center justify-center bg-background p-4">
+      <div className="absolute right-4 top-4"><ThemeToggle /></div>
       <div className="w-full max-w-md space-y-6">
         <div className="text-center space-y-2">
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10">
